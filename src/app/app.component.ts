@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-full-stack';
+  messages = this.http.get<any[]>('http://localhost:4201');
+
+  handleCreate = () => {
+    this.http.post<any>('http://localhost:4201/users', {username: "Alex"})
+    .subscribe(next => console.log('new user: ', next.body))
+  }
+
+  constructor(private http: HttpClient) {}
 }
